@@ -128,13 +128,16 @@ public class BookService implements IBookService {
 
 	@Override
 	public BookModel changeBookQuantity(Long bookId, Integer quantity, String token) {
-		Long userId = tokenUtil.decodeToken(token);
-		Optional<BookModel> isUserAndBookIdPresent = bookRepository.findByUserIdAndBookId(userId, bookId);
-		if (isUserAndBookIdPresent.isPresent()) {
-			isUserAndBookIdPresent.get().setBookQuantity(quantity);
-			bookRepository.save(isUserAndBookIdPresent.get());
-			return isUserAndBookIdPresent.get();
-		} 
+		boolean isUserPresent = restTemplate.getForObject("http://BS-UserService:8090/userService/validateUser/" + token, Boolean.class);
+		if (isUserPresent) {
+			Long userId = tokenUtil.decodeToken(token);
+			Optional<BookModel> isUserAndBookIdPresent = bookRepository.findByUserIdAndBookId(userId, bookId);
+			if (isUserAndBookIdPresent.isPresent()) {
+				isUserAndBookIdPresent.get().setBookQuantity(quantity);
+				bookRepository.save(isUserAndBookIdPresent.get());
+				return isUserAndBookIdPresent.get();
+			} 
+		}
 		throw new BookNotFoundException(400, "Token not found");
 	}
 
@@ -144,13 +147,16 @@ public class BookService implements IBookService {
 
 	@Override
 	public BookModel changeBookPrice(Long bookId, Double price, String token) {
-		Long userId = tokenUtil.decodeToken(token);
-		Optional<BookModel> isUserAndBookIdPresent = bookRepository.findByUserIdAndBookId(userId, bookId);
-		if (isUserAndBookIdPresent.isPresent()) {
-			isUserAndBookIdPresent.get().setBookPrice(price);
-			bookRepository.save(isUserAndBookIdPresent.get());
-			return isUserAndBookIdPresent.get();
-		} 
+		boolean isUserPresent = restTemplate.getForObject("http://BS-UserService:8090/userService/validateUser/" + token, Boolean.class);
+		if (isUserPresent) {
+			Long userId = tokenUtil.decodeToken(token);
+			Optional<BookModel> isUserAndBookIdPresent = bookRepository.findByUserIdAndBookId(userId, bookId);
+			if (isUserAndBookIdPresent.isPresent()) {
+				isUserAndBookIdPresent.get().setBookPrice(price);
+				bookRepository.save(isUserAndBookIdPresent.get());
+				return isUserAndBookIdPresent.get();
+			}
+		}
 		throw new BookNotFoundException(400, "Token not found");
 	}
 }
