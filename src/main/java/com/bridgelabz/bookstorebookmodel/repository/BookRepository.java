@@ -11,7 +11,7 @@ import com.bridgelabz.bookstorebookmodel.model.BookModel;
 @Repository
 public interface BookRepository extends JpaRepository<BookModel, Long> {
 
-	Optional<BookModel> findByUserIdAndBookId(Long userId, Long bookId);
+	Optional<BookModel> findByBookId(Long bookId);
 
 	List<BookModel> findByUserId(Long userId);
 

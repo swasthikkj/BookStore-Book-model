@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bridgelabz.bookstorebookmodel.dto.BookDTO;
 import com.bridgelabz.bookstorebookmodel.model.BookModel;
 import com.bridgelabz.bookstorebookmodel.service.IBookService;
-import com.bridgelabz.bookstorebookmodel.util.Response;
+import com.bridgelabz.bookstorebookmodel.util.BookResponse;
 
 /**
  * Purpose:Controller for bookstore 
@@ -39,9 +39,9 @@ public class BookController {
 	 */
 
 	@PostMapping("/addBook")
-	public ResponseEntity<Response> addBook(@Valid @RequestBody BookDTO bookDTO, @RequestHeader String token) {
+	public ResponseEntity<BookResponse> addBook(@Valid @RequestBody BookDTO bookDTO, @RequestHeader String token) {
 		BookModel bookModel = bookService.addBook(bookDTO, token);
-		Response response = new Response(200, "Book added successfully", bookModel);
+		BookResponse response = new BookResponse(200, "Book added successfully", bookModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);	
 	}
 
@@ -50,9 +50,9 @@ public class BookController {
 	 */
 
 	@PutMapping("/updateBook/{bookId}")
-	public ResponseEntity<Response> updateBook(@Valid @RequestBody BookDTO bookDTO, @PathVariable Long bookId, @RequestHeader String token) {
+	public ResponseEntity<BookResponse> updateBook(@Valid @RequestBody BookDTO bookDTO, @PathVariable Long bookId, @RequestHeader String token) {
 		BookModel bookModel = bookService.updateBook(bookDTO, bookId, token);
-		Response response = new Response(200, "Book updated successfully", bookModel);
+		BookResponse response = new BookResponse(200, "Book updated successfully", bookModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -61,9 +61,9 @@ public class BookController {
 	 */
 
 	@GetMapping("/getAllBooks")
-	public ResponseEntity<Response> getAllBooks(@RequestHeader String token) {
+	public ResponseEntity<BookResponse> getAllBooks(@RequestHeader String token) {
 		List<BookModel> bookModel = bookService.getAllBooks(token);
-		Response response = new Response(200, "Fetched all books", bookModel);
+		BookResponse response = new BookResponse(200, "Fetched all books", bookModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -72,9 +72,9 @@ public class BookController {
 	 */
 
 	@GetMapping("/getBookById/{bookId}")
-	public ResponseEntity<Response> getBookById(@PathVariable Long bookId, @RequestHeader String token) {
+	public ResponseEntity<BookResponse> getBookById(@PathVariable Long bookId, @RequestHeader String token) {
 		Optional<BookModel> bookModel = bookService.getBookById(bookId, token);
-		Response response = new Response(200, "Fetched book by id", bookModel);
+		BookResponse response = new BookResponse(200, "Fetched book by id", bookModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -83,9 +83,9 @@ public class BookController {
 	 */
 
 	@DeleteMapping("/deleteBook/{bookId}")
-	public ResponseEntity<Response> deleteBook(@PathVariable Long bookId, @RequestHeader String token) {
-		Response bookModel = bookService.deleteBook(bookId, token);
-		Response response = new Response(200, "Book deleted successfully", bookModel);
+	public ResponseEntity<BookResponse> deleteBook(@PathVariable Long bookId, @RequestHeader String token) {
+		BookResponse bookModel = bookService.deleteBook(bookId, token);
+		BookResponse response = new BookResponse(200, "Book deleted successfully", bookModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -94,9 +94,9 @@ public class BookController {
 	 */
 
 	@PutMapping("/changeBookQuantity/{bookId}")
-	public ResponseEntity<Response> changeBookQuantity(@PathVariable Long bookId, @PathVariable Integer quantity, @RequestHeader String token) {
+	public ResponseEntity<BookResponse> changeBookQuantity(@PathVariable Long bookId, @PathVariable Integer quantity, @RequestHeader String token) {
 		BookModel bookModel = bookService.changeBookQuantity(bookId, quantity, token);
-		Response response = new Response(200, "Book quantity changed successfully", bookModel);
+		BookResponse response = new BookResponse(200, "Book quantity changed successfully", bookModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -105,9 +105,20 @@ public class BookController {
 	 */
 
 	@PutMapping("/changeBookPrice/{bookId}")
-	public ResponseEntity<Response> changeBookPrice(@PathVariable Long bookId, @PathVariable Double price, @RequestHeader String token) {
+	public ResponseEntity<BookResponse> changeBookPrice(@PathVariable Long bookId, @PathVariable Long price, @RequestHeader String token) {
 		BookModel bookModel = bookService.changeBookPrice(bookId, price, token);
-		Response response = new Response(200, "Book price changed successfully", bookModel);
+		BookResponse response = new BookResponse(200, "Book price changed successfully", bookModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Purpose:validate book
+	 */
+
+	@GetMapping("/validateBook/{token}")
+	public ResponseEntity<BookResponse> validateBook(@PathVariable String token) {
+		boolean bookModel = bookService.validateBook(token);
+		BookResponse response = new BookResponse(200, "Validation success", bookModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }

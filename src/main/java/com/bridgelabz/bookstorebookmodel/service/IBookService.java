@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import com.bridgelabz.bookstorebookmodel.dto.BookDTO;
 import com.bridgelabz.bookstorebookmodel.model.BookModel;
-import com.bridgelabz.bookstorebookmodel.util.Response;
+import com.bridgelabz.bookstorebookmodel.util.BookResponse;
 
 /**
  * Purpose:Interface for bookstore 
@@ -23,10 +23,12 @@ public interface IBookService {
 
 	Optional<BookModel> getBookById(Long bookId, String token);
 
-	Response deleteBook(Long bookId, String token);
+	BookResponse deleteBook(Long bookId, String token);
 
 	BookModel changeBookQuantity(Long bookId, Integer quantity, String token);
 	
-	BookModel changeBookPrice(Long bookId, Double price, String token);
+	BookModel changeBookPrice(Long bookId, Long price, String token);
+
+	Boolean validateBook(String token);
 		
 }

@@ -13,6 +13,6 @@ public class BookDTO {
 	private String bookName;
 	private String bookAuthor;
 	private String bookDescription;
-	private double bookPrice;
+	private long bookPrice;
 	private int bookQuantity;
 }
