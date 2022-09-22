@@ -67,11 +67,11 @@ public class Swagger implements WebMvcConfigurer {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfo("bookstorebookmodel",
+        return new ApiInfo("BookStore BookModel",
                 "APIs for E.",
                 "1.0",
                 "Terms of service",
-                new Contact("bookstorebookmodel", "http://bridgelabz.bookstorebookmodel", "swasthikkj@gmail.com"),
+                new Contact("BookStorebookmodel", "http://bridgelabz.bookstorebookmodel", "swasthikkj@gmail.com"),
                 "Apache 2.0",
                 "http://www.apache.org/licenses/LICENSE-2.0&quot",
                 Collections.emptyList());

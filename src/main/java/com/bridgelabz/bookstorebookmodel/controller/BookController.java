@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.bookstorebookmodel.dto.BookDTO;
@@ -93,7 +94,7 @@ public class BookController {
 	 * Purpose:change book quantity
 	 */
 
-	@PutMapping("/changeBookQuantity/{bookId}")
+	@PutMapping("/changeBookQuantity/{bookId}/{quantity}")
 	public ResponseEntity<BookResponse> changeBookQuantity(@PathVariable Long bookId, @PathVariable Integer quantity, @RequestHeader String token) {
 		BookModel bookModel = bookService.changeBookQuantity(bookId, quantity, token);
 		BookResponse response = new BookResponse(200, "Book quantity changed successfully", bookModel);
@@ -105,7 +106,7 @@ public class BookController {
 	 */
 
 	@PutMapping("/changeBookPrice/{bookId}")
-	public ResponseEntity<BookResponse> changeBookPrice(@PathVariable Long bookId, @PathVariable Long price, @RequestHeader String token) {
+	public ResponseEntity<BookResponse> changeBookPrice(@PathVariable Long bookId, @RequestParam Long price, @RequestHeader String token) {
 		BookModel bookModel = bookService.changeBookPrice(bookId, price, token);
 		BookResponse response = new BookResponse(200, "Book price changed successfully", bookModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
@@ -116,9 +117,21 @@ public class BookController {
 	 */
 
 	@GetMapping("/validateBook/{token}")
-	public ResponseEntity<BookResponse> validateBook(@PathVariable String token) {
-		boolean bookModel = bookService.validateBook(token);
-		BookResponse response = new BookResponse(200, "Validation success", bookModel);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+	public Boolean validateBook(@PathVariable String token) {
+		return bookService.validateBook(token);
+	}
+	
+	/**
+	 * Purpose:update book quantity
+	 */
+
+	@PutMapping("/updateBookQuantity/{bookId}/{quantity}")
+	public BookResponse updateBookQuantity(@PathVariable Long bookId, @PathVariable Integer quantity) {
+		return bookService.updateBookQuantity(bookId, quantity);
+	}
+	
+	@PutMapping("/updateBooksQuantity/{bookId}/{quantity}")
+	public BookResponse updateBooksQuantity(@PathVariable Long bookId, @PathVariable Integer quantity) {
+		return bookService.updateBookQuantity(bookId, quantity);
 	}
 }

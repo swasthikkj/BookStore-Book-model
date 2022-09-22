@@ -166,4 +166,34 @@ public class BookService implements IBookService {
 			return true;
 		throw new BookNotFoundException(400, "Token not found");
 	}
+	
+	/**
+	 * Purpose:update book quantity
+	 */
+	
+	@Override
+	public BookResponse updateBookQuantity(Long bookId, Integer quantity) {
+		Optional<BookModel> isBookPresent = bookRepository.findById(bookId);
+		if(isBookPresent.isPresent()) {
+			isBookPresent.get().setBookQuantity(isBookPresent.get().getBookQuantity()-quantity);
+			bookRepository.save(isBookPresent.get());
+			return new BookResponse (200, "book quantity updated sucessfully", isBookPresent.get());
+		}
+		throw new BookNotFoundException(400, "Book not found");
+	}
+	
+	/**
+	 * Purpose:update book quantity
+	 */
+	
+	@Override
+	public BookResponse updateBooksQuantity(Long bookId, Integer quantity) {
+		Optional<BookModel> isBookPresent = bookRepository.findById(bookId);
+		if(isBookPresent.isPresent()) {
+			isBookPresent.get().setBookQuantity(isBookPresent.get().getBookQuantity()-quantity);
+			bookRepository.save(isBookPresent.get());
+			return new BookResponse (200, "book quantity updated sucessfully", isBookPresent.get());
+		}
+		throw new BookNotFoundException(400, "Book not found");
+	}
 }

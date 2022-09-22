@@ -14,9 +14,9 @@ import com.bridgelabz.bookstorebookmodel.util.BookResponse;
  */
 
 public interface IBookService {
-	
+
 	BookModel addBook(BookDTO bookDTO, String token);
-	
+
 	BookModel updateBook(BookDTO bookDTO, Long bookId, String token);
 
 	List<BookModel> getAllBooks(String token);
@@ -26,9 +26,13 @@ public interface IBookService {
 	BookResponse deleteBook(Long bookId, String token);
 
 	BookModel changeBookQuantity(Long bookId, Integer quantity, String token);
-	
+
 	BookModel changeBookPrice(Long bookId, Long price, String token);
 
 	Boolean validateBook(String token);
-		
+
+	BookResponse updateBookQuantity(Long bookId, Integer quantity);
+
+	BookResponse updateBooksQuantity(Long bookId, Integer quantity);
+
 }
