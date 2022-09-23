@@ -78,8 +78,7 @@ public class BookService implements IBookService {
 	public List<BookModel> getAllBooks(String token) {
 		boolean isUserPresent = restTemplate.getForObject("http://BS-UserService:8090/userService/verifyToken/" + token, Boolean.class);
 		if (isUserPresent) {
-			Long userId = tokenUtil.decodeToken(token);		
-			List<BookModel> getAllBooks = bookRepository.findByUserId(userId);
+			List<BookModel> getAllBooks = bookRepository.findAll();
 			if(getAllBooks.size() > 0) {
 				return getAllBooks;
 			}			
@@ -190,7 +189,7 @@ public class BookService implements IBookService {
 	public BookResponse updateBooksQuantity(Long bookId, Integer quantity) {
 		Optional<BookModel> isBookPresent = bookRepository.findById(bookId);
 		if(isBookPresent.isPresent()) {
-			isBookPresent.get().setBookQuantity(isBookPresent.get().getBookQuantity()-quantity);
+			isBookPresent.get().setBookQuantity(isBookPresent.get().getBookQuantity()+quantity);
 			bookRepository.save(isBookPresent.get());
 			return new BookResponse (200, "book quantity updated sucessfully", isBookPresent.get());
 		}
