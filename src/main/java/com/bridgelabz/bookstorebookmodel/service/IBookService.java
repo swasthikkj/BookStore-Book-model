@@ -35,8 +35,8 @@ public interface IBookService {
 
 	BookResponse updateBooksQuantity(Long bookId, Integer quantity);
 
-	Optional<BookModel> getBookByAuthor(String bookAuthor, String token);
+	List<BookModel> getBookByAuthor(String bookAuthor, String token);
 
-	Optional<BookModel> getBookByBookName(String bookName, String token);
+	List<BookModel> getBookByBookName(String bookName, String token);
 
 }

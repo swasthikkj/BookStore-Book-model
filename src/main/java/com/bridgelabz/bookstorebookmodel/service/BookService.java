@@ -108,14 +108,10 @@ public class BookService implements IBookService {
 	 */
 
 	@Override
-	public Optional<BookModel> getBookByAuthor(String bookAuthor, String token) {
+	public List<BookModel> getBookByAuthor(String bookAuthor, String token) {
 		boolean isUserPresent = restTemplate.getForObject("http://BS-UserService:8090/userService/verifyToken/" + token, Boolean.class);
 		if (isUserPresent) {
-			Optional<BookModel> isBookAuthorPresent = bookRepository.findByAuthor(bookAuthor);
-			if(isBookAuthorPresent.isPresent()) {
-				return isBookAuthorPresent;
-			} 
-			throw new BookNotFoundException(400, "Book not present");
+			return bookRepository.findByAuthor(bookAuthor);
 		}
 		throw new BookNotFoundException(400, "Token not found");
 	}
@@ -125,14 +121,10 @@ public class BookService implements IBookService {
 	 */
 
 	@Override
-	public Optional<BookModel> getBookByBookName(String bookName, String token) {
+	public List<BookModel> getBookByBookName(String bookName, String token) {
 		boolean isUserPresent = restTemplate.getForObject("http://BS-UserService:8090/userService/verifyToken/" + token, Boolean.class);
 		if (isUserPresent) {
-			Optional<BookModel> isBookNamePresent = bookRepository.findByBookName(bookName);
-			if(isBookNamePresent.isPresent()) {
-				return isBookNamePresent;
-			} 
-			throw new BookNotFoundException(400, "Book not present");
+			return bookRepository.findByBookName(bookName);
 		}
 		throw new BookNotFoundException(400, "Token not found");
 	}
