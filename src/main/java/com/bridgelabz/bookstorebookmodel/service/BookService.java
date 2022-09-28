@@ -87,7 +87,7 @@ public class BookService implements IBookService {
 	}
 
 	/**
-	 * Purpose:fetch notes by id
+	 * Purpose:fetch books by id
 	 */
 
 	@Override
@@ -97,6 +97,40 @@ public class BookService implements IBookService {
 			Optional<BookModel> isBookIdPresent = bookRepository.findByBookId(bookId);
 			if(isBookIdPresent.isPresent()) {
 				return isBookIdPresent;
+			} 
+			throw new BookNotFoundException(400, "Book not present");
+		}
+		throw new BookNotFoundException(400, "Token not found");
+	}
+	
+	/**
+	 * Purpose:fetch books by author
+	 */
+
+	@Override
+	public Optional<BookModel> getBookByAuthor(String bookAuthor, String token) {
+		boolean isUserPresent = restTemplate.getForObject("http://BS-UserService:8090/userService/verifyToken/" + token, Boolean.class);
+		if (isUserPresent) {
+			Optional<BookModel> isBookAuthorPresent = bookRepository.findByAuthor(bookAuthor);
+			if(isBookAuthorPresent.isPresent()) {
+				return isBookAuthorPresent;
+			} 
+			throw new BookNotFoundException(400, "Book not present");
+		}
+		throw new BookNotFoundException(400, "Token not found");
+	}
+	
+	/**
+	 * Purpose:fetch books by book name
+	 */
+
+	@Override
+	public Optional<BookModel> getBookByBookName(String bookName, String token) {
+		boolean isUserPresent = restTemplate.getForObject("http://BS-UserService:8090/userService/verifyToken/" + token, Boolean.class);
+		if (isUserPresent) {
+			Optional<BookModel> isBookNamePresent = bookRepository.findByBookName(bookName);
+			if(isBookNamePresent.isPresent()) {
+				return isBookNamePresent;
 			} 
 			throw new BookNotFoundException(400, "Book not present");
 		}

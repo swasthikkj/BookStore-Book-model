@@ -80,6 +80,28 @@ public class BookController {
 	}
 
 	/**
+	 * Purpose:get book by author
+	 */
+
+	@GetMapping("/getBookByAuthor/{author}")
+	public ResponseEntity<BookResponse> getBookByAuthor(@PathVariable String bookAuthor, @RequestHeader String token) {
+		Optional<BookModel> bookModel = bookService.getBookByAuthor(bookAuthor, token);
+		BookResponse response = new BookResponse(200, "Fetched book by id", bookModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Purpose:get book by book name
+	 */
+
+	@GetMapping("/getBookByBookName/{bookName}")
+	public ResponseEntity<BookResponse> getBookByBookName(@PathVariable String bookName, @RequestHeader String token) {
+		Optional<BookModel> bookModel = bookService.getBookByBookName(bookName, token);
+		BookResponse response = new BookResponse(200, "Fetched book by id", bookModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	/**
 	 * Purpose:delete book by id
 	 */
 
